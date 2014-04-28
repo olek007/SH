@@ -1,0 +1,11 @@
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\UnityEditor.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\UnityEngine.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\nunit.framework.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\Ulek\Desktop\scary_house-master\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\Ulek\Desktop\scary_house-master\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\Ulek\Desktop\scary_house-master\obj\Debug\Assembly-CSharp.dll
+C:\Users\Ulek\Desktop\scary_house-master\obj\Debug\Assembly-CSharp.pdb
