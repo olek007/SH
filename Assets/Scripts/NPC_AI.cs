@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class NPC_AI : MonoBehaviour {
-	
-   	public NavMeshAgent agent;
+
+	private NavMeshAgent agent;
     public Transform exit;
     public float fearLevel;
 	public float fearLevelDecreaseRate = 1.0f;
@@ -35,6 +35,11 @@ public class NPC_AI : MonoBehaviour {
 		{
 			GhostAI.NPCsInside.Add(gameObject);
 		}
+
+		if (!ZombieAI.NPCsInside.Contains(gameObject))
+		{
+			ZombieAI.NPCsInside.Add(gameObject);
+		}
 		
 		if(Vector3.Distance(transform.position, agent.destination) <= 1.5f)
 		{
@@ -48,12 +53,13 @@ public class NPC_AI : MonoBehaviour {
 	        agent.destination = exit.position;
 			CancelInvoke();
 	        agent.speed = 3.5f;
-
-            if (Vector3.Distance(transform.position, exit.transform.position) <= 1.5f)
-            {
-                Destroy(gameObject);
-            }
         }
+
+
+		if (Vector3.Distance(transform.position, exit.transform.position) <= 1.5f)
+		{
+			Destroy(gameObject);
+		}
 
 		if (fearSusceptibility > fearSusceptibilityBase)
 		{
@@ -64,13 +70,17 @@ public class NPC_AI : MonoBehaviour {
 	void LateUpdate()
 	{
 		if(fearLevel>0)
-		fearLevel = (fearLevel - (fearLevelDecreaseRate * Time.deltaTime));
+		fearLevel -= fearLevelDecreaseRate * Time.deltaTime;
 	}
 
 	public void addFear(float fearAmount)
 	{
-		fearLevel += fearAmount;
-		ChangePlace();
+		if (fearLevel < 100)
+		{
+			fearLevel += fearAmount;
+			ChangePlace();
+		}
+		
 	}
 
 	public float ReportFearSusceptibility()

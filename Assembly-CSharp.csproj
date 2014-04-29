@@ -59,8 +59,8 @@
      <Compile Include="Assets\Scripts\ScaryBar.cs" />
      <Compile Include="Assets\Scripts\SpellsDefinitions.cs" />
      <Compile Include="Assets\Scripts\SpellsGUI.cs" />
-     <Compile Include="Assets\Scripts\TerroristAI.cs" />
      <Compile Include="Assets\Scripts\WardrobeOpen.cs" />
+     <Compile Include="Assets\Scripts\ZombieAI.cs" />
      <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

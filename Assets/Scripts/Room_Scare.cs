@@ -173,9 +173,6 @@ public class Room_Scare : MonoBehaviour {
 						Instantiate(mana.GetComponent<SpellsDefinitions>().monsters[selectedSpell], new Vector3 (hit.point.x,hit.point.y-1.0f,hit.point.z), transform.rotation);
 					}
 				}
-
-				
-			
 			}
 			else
 			{
