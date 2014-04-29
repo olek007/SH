@@ -11,8 +11,10 @@ public class Room_Scare : MonoBehaviour {
     private float manaPool;
 	private float spellReadyTimer;
 	private float spellManaTimer;
+	private float spellAvailableTimer;
 	public Texture spellReady;
 	public Texture spellMana;
+	public Texture spellAvailable;
 	private Vector3 mousePos;
 
 
@@ -60,6 +62,12 @@ public class Room_Scare : MonoBehaviour {
 				GUI.Label(new Rect((Screen.width - spellMana.width) / 2, (Screen.height - spellMana.height) / 2, spellMana.width, spellMana.height), spellMana);
 				spellManaTimer -= Time.deltaTime;
 			}
+
+		if (spellAvailableTimer > 0)
+		{
+			GUI.Label(new Rect((Screen.width - spellAvailable.width) / 2, (Screen.height - spellAvailable.height) / 2, spellAvailable.width, spellAvailable.height), spellAvailable);
+			spellAvailableTimer -= Time.deltaTime;
+		}
 	}
 
 	void OnMouseDown()
@@ -70,26 +78,47 @@ public class Room_Scare : MonoBehaviour {
 			{
 				if (SpellsDefinitions.spells1Mana[SpellsGUI.currentSpell1] <= manaPool)
 				{
-					for(int i=0;i<availableItems.Length;i++)
+					if (availableItems[SpellsGUI.currentSpell1] == true)
 					{
-						if(availableItems[i]==true)
+
+						switch (SpellsGUI.currentSpell1)
 						{
-							if(SpellsGUI.currentSpell1==i)
-							{
-								GameObject.Find("Wardrobe/Right_Door").rigidbody.AddRelativeForce(0,0,-0.0001f);
-								GameObject.Find("Wardrobe/Left_Door").rigidbody.AddRelativeForce(0,0,-0.0001f);
-							}
-							RoomAction(SpellsGUI.currentSpell1, SpellsDefinitions.spells1Mana[SpellsGUI.currentSpell1], SpellsDefinitions.spells1Dmg[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1CooldownLeft[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1Cooldown[SpellsGUI.currentSpell1]);
-						}
-						else
-						{
-							if(SpellsGUI.currentSpell1!=i)
-							{
-								RoomAction(SpellsGUI.currentSpell1, SpellsDefinitions.spells1Mana[SpellsGUI.currentSpell1], SpellsDefinitions.spells1Dmg[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1CooldownLeft[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1Cooldown[SpellsGUI.currentSpell1]);
-							}
-							break;
-						}
+							case 0:		//Swiatlo
+								{
+									GameObject.Find(gameObject.name + "/Point light").SendMessage("TurnOff");
+									foreach (GameObject NPC in NPCsInside)
+									{
+										NPC.SendMessage("increaseFearSusceptibility", 0.1 / NPCsInside.Count);
+									}
+								}
+								break;
+							case 1:		//Szafa
+								{
+									GameObject.Find(gameObject.name + "/Wardrobe/Right_Door").SendMessage("openWardrobe");
+									GameObject.Find(gameObject.name + "/Wardrobe/Left_Door").SendMessage("openWardrobe");
+									foreach (GameObject NPC in NPCsInside)
+									{
+										NPC.SendMessage("increaseFearSusceptibility", 0.2 / NPCsInside.Count);
+									}
+								}
+								break;
+							case 2:		//Kuchenka
+								{
+									GameObject.Find(gameObject.name + "/Oven/Spawn fire").SendMessage("explosionOven");
+									foreach (GameObject NPC in NPCsInside)
+									{
+										NPC.SendMessage("increaseFearSusceptibility", 0.3 / NPCsInside.Count);
+									}
+								}
+								break;
+						};
+
+						RoomAction(SpellsGUI.currentSpell1, SpellsDefinitions.spells1Mana[SpellsGUI.currentSpell1], SpellsDefinitions.spells1Dmg[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1CooldownLeft[SpellsGUI.currentSpell1],ref SpellsDefinitions.spells1Cooldown[SpellsGUI.currentSpell1]);
 					}
+					else
+					{
+						spellAvailableTimer = 2.0f;
+					}	
 				}else
 				{
 					spellManaTimer = 2.0f;

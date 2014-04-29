@@ -8,7 +8,8 @@ public class NPC_AI : MonoBehaviour {
     public Transform exit;
     public float fearLevel;
 	public float fearLevelDecreaseRate = 1.0f;
-	public float fearSusceptibility = 1.0f;
+	public float fearSusceptibilityBase = 1.0f;
+	public float fearSusceptibility;
 	public GameObject [] waypoints;
 	public List<NPC_AI> NPCs = new List<NPC_AI>();
 	public GameObject [] people;
@@ -16,10 +17,7 @@ public class NPC_AI : MonoBehaviour {
 	void Start () 
 	{
         agent = gameObject.GetComponent<NavMeshAgent>();
-
-
 		people = GameObject.FindGameObjectsWithTag("GameController");
-
 		foreach(GameObject NPC in people)
 		{
 			if(NPC != gameObject)
@@ -27,9 +25,8 @@ public class NPC_AI : MonoBehaviour {
 				NPCs.Add(NPC.GetComponent<NPC_AI>());
 			}
 		}
-
 		InvokeRepeating("ChangePlace",0,Random.Range(8.0f,10.0f));
-		
+		fearSusceptibility = fearSusceptibilityBase;
 	}
 
 	void Update () 
@@ -57,6 +54,11 @@ public class NPC_AI : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
+
+		if (fearSusceptibility > fearSusceptibilityBase)
+		{
+			fearSusceptibility -= Time.deltaTime / 5;
+		}
 	}
 
 	void LateUpdate()
@@ -98,6 +100,12 @@ public class NPC_AI : MonoBehaviour {
 
 		}
 		return true;
+	}
+
+
+	void increaseFearSusceptibility(float value)
+	{
+		fearSusceptibility += value;
 	}
 	
 
