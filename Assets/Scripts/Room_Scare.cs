@@ -86,13 +86,17 @@ public class Room_Scare : MonoBehaviour {
 							case 0:		//Swiatlo
 								{
 									GameObject.Find(gameObject.name + "/Point light").SendMessage("TurnOff");
+									if (GameObject.Find(gameObject.name + "/Lamp/Point light"))
+									{
+										GameObject.Find(gameObject.name + "/Lamp/Point light").SendMessage("TurnOff");
+									}
 									foreach (GameObject NPC in NPCsInside)
 									{
 										NPC.SendMessage("increaseFearSusceptibility", 0.1 / NPCsInside.Count);
 									}
 								}
 								break;
-							case 1:		//Szafa
+							case 1:		//Otwieranie drzwi
 								{
 									GameObject.Find(gameObject.name + "/Wardrobe/Right_Door").SendMessage("openWardrobe");
 									GameObject.Find(gameObject.name + "/Wardrobe/Left_Door").SendMessage("openWardrobe");
@@ -102,13 +106,21 @@ public class Room_Scare : MonoBehaviour {
 									}
 								}
 								break;
-							case 2:		//Kuchenka
+							case 2:		//Wybuch
 								{
-									GameObject.Find(gameObject.name + "/Oven/Spawn fire").SendMessage("explosionOven");
+									if (GameObject.Find(gameObject.name + "/Oven/Spawn fire"))
+									{
+										GameObject.Find(gameObject.name + "/Oven/Spawn fire").SendMessage("explosionOven");
+									}
+									if (GameObject.Find(gameObject.name + "/TV/Spawn fire"))
+									{
+										GameObject.Find(gameObject.name + "/TV/Spawn fire").SendMessage("explosionOven");
+									}
 									foreach (GameObject NPC in NPCsInside)
 									{
 										NPC.SendMessage("increaseFearSusceptibility", 0.3 / NPCsInside.Count);
 									}
+									availableItems[2] = false;
 								}
 								break;
 						};
